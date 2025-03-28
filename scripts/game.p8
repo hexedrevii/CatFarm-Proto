@@ -1,13 +1,18 @@
 function init()
 	-- enable mouse
 	poke(0x5f2d, 1)
+
+	world:set(ingame)
 end
 
 function update()
-	mouse:update();
+	mouse:update()
+
+	world:update()
 end
 
 function draw()
-	cls(12)
+	world:draw()
+
 	mouse:draw()
 end
