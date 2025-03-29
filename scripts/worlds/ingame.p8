@@ -16,6 +16,8 @@ function ingame:init()
 			}
 		},
 
+		pressed = false,
+
 		plots = {},
 	}
 
@@ -49,15 +51,40 @@ function ingame:update()
 		cam.x -= cam.speed
 	end
 
-	for plot in all(self.data.plots) do
+	for plot in all(data.plots) do
+		plot:update(cam.x)
+
 		local col = {
 			x = (plot.x - cam.x) * 8, y = plot.y * 8,
 			w = 8, h = 8
 		}
 
 		-- The mouse is hovering the plot
-		if pr(col, mouse.x, mouse.y) then
-			-- TODO: Everything
+		if pr(col, mouse.x, mouse.y) and not self.data.pressed then
+			if mouse.held then
+				local proceed = true
+				for p in all(data.plots) do
+					if p.x == plot.x and p.y == plot.y then
+						goto continue
+					end
+
+					if p.active then
+						proceed = false
+						break
+					end
+
+					::continue::
+				end
+
+				if proceed then
+					plot.active = true
+					self.data.pressed = true;
+				end
+			end
+		end
+
+		if not mouse.held and self.data.pressed then
+			self.data.pressed = false
 		end
 	end
 end
@@ -65,4 +92,8 @@ end
 function ingame:draw()
 	cls(12)
 	map(self.data.cam.x, 0)
+
+	for plot in all(self.data.plots) do
+		plot:draw(self.data.cam.x)
+	end
 end
