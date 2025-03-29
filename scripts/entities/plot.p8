@@ -11,7 +11,10 @@ function plot.new(x, y)
 
 	local colours = { normal = 7, hover = 10 }
 
-	add(p.buttons, button.new("plant", colours, p.x, p.y, -20, -5, function() p.active = false end))
+	add(p.buttons, button.new("plant", colours, p.x, p.y, -20, -5, function()
+		p.state = "growing"
+	end))
+
 	add(p.buttons, button.new("cancel", colours, p.x, p.y, 10, -5, function() p.active = false end))
 
 	return setmetatable(p, plot)
@@ -31,6 +34,7 @@ function plot:draw(cam)
 			b:draw(cam);
 		end
 
-		-- ?self.state, (self.x - cam) * 8, self.y * 8 + 15, 7
+		local tx = (((self.x - cam) * 8) + 4) - ((#self.state * 4) / 2)
+		?self.state, tx, self.y * 8 + 15, 7
 	end
 end
