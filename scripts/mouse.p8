@@ -26,5 +26,5 @@ function mouse:update()
 end
 
 function mouse:draw()
-	spr(self.sp, self.x - 2, self.y - 2)
+	spr(self.sp, self.x, self.y)
 end

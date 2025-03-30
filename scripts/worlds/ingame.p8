@@ -6,6 +6,12 @@ ingame = {
 -- Since it means it resets every time.
 function ingame:init()
 	self.data = {
+		coins = 0,
+
+		xp = 0,
+		nxp = 10,
+		level = 0,
+
 		cam = {
 			x = 0,
 			speed = 1,
@@ -18,6 +24,7 @@ function ingame:init()
 
 		pressed = false,
 
+		active = 1,
 		plots = {},
 	}
 
@@ -59,11 +66,14 @@ function ingame:update()
 			w = 8, h = 8
 		}
 
-		-- The mouse is hovering the plot
+		-- the mouse is hovering the plot
 		if pr(col, mouse.x, mouse.y) and not self.data.pressed then
+			-- mouse click
 			if mouse.held then
+				-- if any other plot is active bail
 				local proceed = true
 				for p in all(data.plots) do
+					-- skip if the plot is itself
 					if p.x == plot.x and p.y == plot.y then
 						goto continue
 					end

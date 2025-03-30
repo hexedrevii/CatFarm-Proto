@@ -6,12 +6,40 @@ function plot.new(x, y)
 		x = x, y = y,
 		active = false,
 		state = "empty",
-		buttons = {}
+		harvest = nil,
+		buttons = {},
+
+		growth = {
+			id = 0,
+			time = 0,
+			mtime = 0,
+			sp = 0,
+
+			mv = true
+		}
 	}
 
 	local colours = { normal = 7, hover = 10 }
 
+	p.harvest = button.new("harvest", colours, p.x, p.y, -8, -17, function()
+		-- TODO: Harvesting
+
+		p.state = "empty"
+	end)
+
 	add(p.buttons, button.new("plant", colours, p.x, p.y, -20, -5, function()
+		if p.state != "empty" then
+			return
+		end
+
+		local plant = plants[ingame.data.active]
+		p.growth.id = ingame.data.active
+		p.growth.time = 0
+		p.growth.mtime = plant.time
+		p.growth.sp = plant.mip
+
+		p.growth.mv = true
+
 		p.state = "growing"
 	end))
 
@@ -26,6 +54,28 @@ function plot:update(cam)
 			b:update(cam);
 		end
 	end
+
+	if self.state == "growing" then
+		local data = self.growth
+
+		data.time += dt
+
+		-- switch sprite
+		if data.mv and data.time >= data.mtime / 2 then
+			data.sp += 1
+			data.mv = false
+		end
+
+		if data.time >= data.mtime then
+			data.time = data.mtime
+			self.state = "ready"
+			data.sp = plants[data.id].mxp
+		end
+	end
+
+	if self.state == "ready" then
+		self.harvest:update(cam)
+	end
 end
 
 function plot:draw(cam)
@@ -36,5 +86,25 @@ function plot:draw(cam)
 
 		local tx = (((self.x - cam) * 8) + 4) - ((#self.state * 4) / 2)
 		?self.state, tx, self.y * 8 + 15, 7
+
+		if self.state == "growing" then
+			local percent = flr((self.growth.time / self.growth.mtime) * 100)
+			local time = percent .. "%"
+
+			local tx = (((self.x - cam) * 8) + 4) - ((#time * 4) / 2)
+			?time, tx, self.y * 8 + 21, 7
+		end
+
+		if self.state == "ready" then
+			self.harvest:draw(cam)
+		end
+	end
+
+	if self.state == "ready" then
+		spr(53, (self.x - cam) * 8, self.y * 8 - 10)
+	end
+
+	if self.state != "empty" then
+		spr(self.growth.sp, (self.x - cam) * 8, self.y * 8)
 	end
 end
