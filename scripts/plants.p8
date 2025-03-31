@@ -11,5 +11,5 @@ mkplant = constructor"name,time,mip,mxp,cst,ret,exp"
 
 plants = {
 	mkplant"wheat,5,55,57,0,1,1",
-	mkplant"carrot,10,58,60,10,15,5"
+	mkplant"carrot,15,58,60,5,10,5"
 }

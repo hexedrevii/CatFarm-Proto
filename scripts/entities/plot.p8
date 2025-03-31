@@ -40,14 +40,20 @@ function plot.new(x, y)
 			return
 		end
 
-		local plant = plants[ingame.data.active]
-		if ingame.data.coins < plant.cst then
+		if ingame.data.inv_id == nil then
 			return
 		end
 
-		ingame.data.coins -= plant.cst
+		local item = ingame.data.inv[ingame.data.inv_id]
+		local plant = plants[item.id]
 
-		p.growth.id = ingame.data.active
+		item.count -= 1
+		if item.count <= 0 then
+			del(ingame.data.inv, item)
+			ingame.data.inv_id = nil
+		end
+
+		p.growth.id = item.id
 		p.growth.time = 0
 		p.growth.mtime = plant.time
 		p.growth.sp = plant.mip

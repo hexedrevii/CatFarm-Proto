@@ -27,9 +27,14 @@ function ingame:init()
 
 		pressed = false,
 
-		active = 1,
 		plots = {},
+
+		inv_id = 1,
+		inv = {},
 	}
+
+	add(self.data.inv, item.new(plants[1].name, 10, 1))
+	add(self.data.inv, item.new(plants[2].name, 5, 2))
 
 	-- loop through the entire map.
 	for x = 0, 128 do
@@ -66,6 +71,12 @@ function ingame:update()
 		end
 
 		cam.x -= cam.speed
+	end
+
+	if btnp(⬆️) then
+		data.inv_id = (data.inv_id - 2) % #data.inv + 1
+	elseif btnp(⬇️) then
+		data.inv_id = data.inv_id % #data.inv + 1
 	end
 
 	for plot in all(data.plots) do
@@ -121,4 +132,13 @@ function ingame:draw()
 
 	spr(16, 1, 8)
 	?self.data.level .. ":" .. pad(flr((self.data.xp / self.data.nxp) * 100), 3) .. "%", 9, 8, 7
+
+	if self.data.inv_id == nil then
+		?"holding nothing", 1, 16, 7
+	else
+		local item = self.data.inv[self.data.inv_id]
+		?"holding " .. item.name .. " (x" .. item.count .. ")", 1, 20, 7
+	end
+
+	?"cycle ⬆️/⬇️", 1, 27, 6
 end

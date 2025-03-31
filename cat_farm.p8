@@ -5,6 +5,7 @@ __lua__
 
 #include scripts/utils.p8
 
+#include scripts/entities/item.p8
 #include scripts/entities/button.p8
 #include scripts/entities/plot.p8
 
