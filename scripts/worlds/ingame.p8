@@ -74,9 +74,15 @@ function ingame:update()
 	end
 
 	if btnp(⬆️) then
-		data.inv_id = (data.inv_id - 2) % #data.inv + 1
-	elseif btnp(⬇️) then
-		data.inv_id = data.inv_id % #data.inv + 1
+		data.inv_id = (data.inv_id and data.inv_id - 1 or #inv)
+		if data.inv_id < 1 then
+				data.inv_id = #data.inv
+		end
+		elseif btnp(⬇️) then
+			data.inv_id = (data.inv_id and data.inv_id + 1 or 1)
+		if data.inv_id > #data.inv then
+				data.inv_id = 1
+		end
 	end
 
 	for plot in all(data.plots) do
@@ -143,7 +149,7 @@ function ingame:draw()
 	?level, 11, 10, 7
 
 	if self.data.inv_id == nil then
-		?"holding nothing", 1, 16, 7
+		?"holding nothing", 1, 20, 7
 	else
 		local item = self.data.inv[self.data.inv_id]
 		?"holding " .. item.name .. " (x" .. item.count .. ")", 1, 20, 7
