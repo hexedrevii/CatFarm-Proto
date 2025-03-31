@@ -1,9 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-#include scripts/plants.p8
-
-#include scripts/utils.p8
+#include scripts/utils/plants.p8
+#include scripts/utils/mouse.p8
+#include scripts/utils/math.p8
 
 #include scripts/entities/item.p8
 #include scripts/entities/button.p8
@@ -13,7 +13,6 @@ __lua__
 #include scripts/worlds/ingame.p8
 
 #include scripts/game.p8
-#include scripts/mouse.p8
 
 function _init()
 	init()
