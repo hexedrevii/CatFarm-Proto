@@ -6,6 +6,8 @@ ingame = {
 -- Since it means it resets every time.
 function ingame:init()
 	self.data = {
+		scale = 3,
+
 		coins = 0,
 
 		xp = 0,
@@ -45,6 +47,27 @@ function ingame:init()
 			end
 		end
 	end
+end
+
+function ingame:draw_shop()
+	local scale = self.data.scale
+  local x, y = (0 - self.data.cam.x * scale), 56
+  local tile_size = 8
+
+  for i=0,1 do
+    for j=0,1 do
+      local tile = 224 + i * 16 + j
+      local sx = (tile % 16) * tile_size
+      local sy = (tile \ 16) * tile_size
+
+      sspr(
+				sx, sy,
+				tile_size, tile_size,
+				(x + j * tile_size) * scale, y + i * tile_size * scale,
+				tile_size * scale, tile_size * scale
+			)
+    end
+  end
 end
 
 function ingame:handle_xp()
@@ -148,6 +171,7 @@ function ingame:draw()
 	spr(16, 3, 10)
 	?level, 11, 10, 7
 
+	-- iventory
 	if self.data.inv_id == nil then
 		?"holding nothing", 1, 20, 7
 	else
@@ -156,4 +180,6 @@ function ingame:draw()
 	end
 
 	?"cycle ⬆️/⬇️", 1, 27, 6
+
+	self:draw_shop()
 end

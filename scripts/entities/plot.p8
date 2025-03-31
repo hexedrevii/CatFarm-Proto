@@ -73,6 +73,10 @@ function plot:update(cam)
 		for b in all(self.buttons) do
 			b:update(cam);
 		end
+
+		if self.state == "ready" then
+			self.harvest:update(cam)
+		end
 	end
 
 	if self.state == "growing" then
@@ -91,10 +95,6 @@ function plot:update(cam)
 			self.state = "ready"
 			data.sp = plants[data.id].mxp
 		end
-	end
-
-	if self.state == "ready" then
-		self.harvest:update(cam)
 	end
 end
 
