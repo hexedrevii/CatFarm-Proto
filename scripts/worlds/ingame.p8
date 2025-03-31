@@ -128,10 +128,19 @@ function ingame:draw()
 		plot:draw(self.data.cam.x)
 	end
 
-	?pad(self.data.coins, 7) .. "c", 1, 1, 7
+	local coins = pad(self.data.coins, 7) .. "c"
+	local level = self.data.level .. ":" .. pad(flr((self.data.xp / self.data.nxp) * 100), 3) .. "%"
 
-	spr(16, 1, 8)
-	?self.data.level .. ":" .. pad(flr((self.data.xp / self.data.nxp) * 100), 3) .. "%", 9, 8, 7
+	-- bg
+	rectfill(2, 2, #level * 4 + 10, 15, 4)
+	rect(1, 1, #level * 4 + 11, 16, 5)
+
+	-- coins
+	?coins, 3, 3, 7
+
+	-- level
+	spr(16, 3, 10)
+	?level, 11, 10, 7
 
 	if self.data.inv_id == nil then
 		?"holding nothing", 1, 16, 7
