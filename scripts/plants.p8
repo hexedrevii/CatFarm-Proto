@@ -8,6 +8,6 @@ plants = {
 
 		cst = 0,
 		ret = 1,
-		exp = 1
+		exp = 2
 	}
 }

@@ -10,7 +10,10 @@ function ingame:init()
 
 		xp = 0,
 		nxp = 10,
-		level = 0,
+		level = 1,
+
+		gap = 2,
+		inc = 0.15,
 
 		cam = {
 			x = 0,
@@ -18,7 +21,7 @@ function ingame:init()
 
 			bounds = {
 				left = 0,
-				right = 10
+				right = 13
 			}
 		},
 
@@ -37,6 +40,13 @@ function ingame:init()
 			end
 		end
 	end
+end
+
+function ingame:handle_xp()
+	self.data.xp -= self.data.nxp
+	self.data.level += 1
+
+	self.data.nxp = flr((self.data.level / self.data.inc)^self.data.gap)
 end
 
 function ingame:update()
@@ -106,4 +116,9 @@ function ingame:draw()
 	for plot in all(self.data.plots) do
 		plot:draw(self.data.cam.x)
 	end
+
+	?pad(self.data.coins, 7) .. "c", 1, 1, 7
+
+	spr(16, 1, 9)
+	?self.data.level .. ":" .. pad(flr((self.data.xp / self.data.nxp) * 100), 3) .. "%", 9, 8, 7
 end

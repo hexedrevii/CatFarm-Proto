@@ -8,3 +8,4 @@ function is_tile_rect(x, y, w, h, flag)return is_tile(x,y,flag) or is_tile(x + w
 function m(t)return(128-(#t*4))/2end
 
 function pr(rect,px,py)return px>=rect.x and px<rect.x+rect.w and py>=rect.y and py<rect.y+rect.h end
+function pad(num, length) local st=tostr(num)while #st<length do st="0"..st end return st end

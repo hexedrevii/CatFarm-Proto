@@ -22,7 +22,15 @@ function plot.new(x, y)
 	local colours = { normal = 7, hover = 10 }
 
 	p.harvest = button.new("harvest", colours, p.x, p.y, -8, -17, function()
-		-- TODO: Harvesting
+		local plant = plants[p.growth.id]
+		ingame.data.coins += plant.ret
+
+		ingame.data.xp += plant.exp
+
+		-- incase we level up
+		while ingame.data.xp >= ingame.data.nxp do
+			ingame:handle_xp()
+		end
 
 		p.state = "empty"
 	end)
@@ -33,6 +41,12 @@ function plot.new(x, y)
 		end
 
 		local plant = plants[ingame.data.active]
+		if ingame.data.coins < plant.cst then
+			return
+		end
+
+		ingame.data.coins -= plant.cst
+
 		p.growth.id = ingame.data.active
 		p.growth.time = 0
 		p.growth.mtime = plant.time

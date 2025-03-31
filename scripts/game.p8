@@ -21,7 +21,4 @@ function draw()
 
 	-- draw mouse on top of everything
 	mouse:draw()
-
-	?"fps: " .. stat(7), 1, 1, 7
-	?"dt: " .. dt, 1, 8, 7
 end
