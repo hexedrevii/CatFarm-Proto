@@ -1,13 +1,15 @@
+-- from miss mouse in pico8 discord
+function constructor(fields)
+	fields = split(fields)
+	return function(vals)
+		if (type(vals) == "string") vals = split(vals)
+		local res = {} for i,k in inext,fields do res[k] = vals[i] end return res
+	end
+end
+
+mkplant = constructor"name,time,mip,mxp,cst,ret,exp"
+
 plants = {
-	[1] = {
-		name = "wheat",
-		time = 5,
-
-		mip = 55,
-		mxp = 57,
-
-		cst = 0,
-		ret = 1,
-		exp = 2
-	}
+	mkplant"wheat,5,55,57,0,1,1",
+	mkplant"carrot,10,58,60,10,15,5"
 }

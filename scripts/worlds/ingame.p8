@@ -119,6 +119,6 @@ function ingame:draw()
 
 	?pad(self.data.coins, 7) .. "c", 1, 1, 7
 
-	spr(16, 1, 9)
+	spr(16, 1, 8)
 	?self.data.level .. ":" .. pad(flr((self.data.xp / self.data.nxp) * 100), 3) .. "%", 9, 8, 7
 end
