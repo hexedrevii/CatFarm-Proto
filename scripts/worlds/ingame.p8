@@ -36,7 +36,7 @@ function ingame:init()
 	}
 
 	add(self.data.inv, item.new(plants[1].name, 10, 1))
-	add(self.data.inv, item.new(plants[2].name, 5, 2))
+	-- add(self.data.inv, item.new(plants[2].name, 5, 2))
 
 	-- loop through the entire map.
 	for x = 0, 128 do
@@ -47,6 +47,8 @@ function ingame:init()
 			end
 		end
 	end
+
+	shop:init()
 end
 
 function ingame:draw_shop()
@@ -85,7 +87,17 @@ function ingame:update()
 		w = (33 - self.data.cam.x * 9), h = 100
 	}
 
-	-- todo: shop ??
+	if pr(shop_col, mouse.x, mouse.y) then
+		if mouse.held then
+			shop:open()
+		end
+	end
+
+	shop:update()
+
+	if shop.is_active then
+		return
+	end
 
 	-- camera movement
 	local cam = data.cam
@@ -193,4 +205,5 @@ function ingame:draw()
 	?"shop", 16 - self.data.cam.x * 9, 80, 7
 
 	-- rect((15 - self.data.cam.x * 9), 90, (33 - self.data.cam.x * 9), 100, 6)
+	shop:draw()
 end

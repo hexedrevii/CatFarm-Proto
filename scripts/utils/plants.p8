@@ -7,9 +7,9 @@ function constructor(fields)
 	end
 end
 
-mkplant = constructor"name,time,mip,mxp,cst,ret,exp"
+mkplant = constructor"id,name,time,mip,mxp,cst,ret,exp,lvl"
 
 plants = {
-	mkplant"wheat,5,55,57,0,1,1",
-	mkplant"carrot,15,58,60,5,10,5"
+	mkplant"1,wheat,5,55,57,0,1,1,1",
+	mkplant"2,carrot,15,58,60,5,10,5,2",
 }
