@@ -51,7 +51,7 @@ end
 
 function ingame:draw_shop()
 	local scale = self.data.scale
-  local x, y = (0 - self.data.cam.x * scale), 56
+  local x, y = (0 - self.data.cam.x * 3), 56
   local tile_size = 8
 
   for i=0,1 do
@@ -79,6 +79,13 @@ end
 
 function ingame:update()
 	local data = self.data
+
+	local shop_col = {
+		x = (15 - self.data.cam.x * 9), y = 90,
+		w = (33 - self.data.cam.x * 9), h = 100
+	}
+
+	-- todo: shop ??
 
 	-- camera movement
 	local cam = data.cam
@@ -182,4 +189,8 @@ function ingame:draw()
 	?"cycle ⬆️/⬇️", 1, 27, 6
 
 	self:draw_shop()
+	spr(242, 20 - self.data.cam.x * 8, 90)
+	?"shop", 16 - self.data.cam.x * 9, 80, 7
+
+	-- rect((15 - self.data.cam.x * 9), 90, (33 - self.data.cam.x * 9), 100, 6)
 end
