@@ -35,7 +35,7 @@ function button:update(cam)
 		end
 
 		if not mouse.held and self.pressed then
-			self.click()
+			self.click(self)
 			self.pressed = false
 		end
 	else

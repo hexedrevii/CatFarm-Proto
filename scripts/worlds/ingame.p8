@@ -99,6 +99,10 @@ function ingame:update()
 		return
 	end
 
+	if btnp(❎) then
+		-- todo: inventory
+	end
+
 	-- camera movement
 	local cam = data.cam
 	if btn(➡️) then
@@ -198,7 +202,7 @@ function ingame:draw()
 		?"holding " .. item.name .. " (x" .. item.count .. ")", 1, 20, 7
 	end
 
-	?"cycle ⬆️/⬇️", 1, 27, 6
+	?"cycle ⬆️/⬇️, ❎ open", 1, 27, 6
 
 	self:draw_shop()
 	spr(242, 20 - self.data.cam.x * 8, 90)
