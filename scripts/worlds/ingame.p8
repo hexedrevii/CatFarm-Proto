@@ -36,7 +36,6 @@ function ingame:init()
 	}
 
 	add(self.data.inv, item.new(plants[1].name, 10, 1))
-	-- add(self.data.inv, item.new(plants[2].name, 5, 2))
 
 	-- loop through the entire map.
 	for x = 0, 128 do
@@ -49,6 +48,7 @@ function ingame:init()
 	end
 
 	shop:init()
+	inventory:init()
 end
 
 function ingame:draw_shop()
@@ -100,7 +100,13 @@ function ingame:update()
 	end
 
 	if btnp(❎) then
-		-- todo: inventory
+		inventory:open()
+	end
+
+	inventory:update()
+
+	if inventory.is_active then
+		return
 	end
 
 	-- camera movement
@@ -210,4 +216,5 @@ function ingame:draw()
 
 	-- rect((15 - self.data.cam.x * 9), 90, (33 - self.data.cam.x * 9), 100, 6)
 	shop:draw()
+	inventory:draw()
 end

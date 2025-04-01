@@ -115,7 +115,7 @@ function shop:init()
 
 		oy += 16
 
-		if count == 6 then
+		if count == self.per_page then
 			add(self.pages, pg)
 			oy = 0
 			count = 0
@@ -141,6 +141,7 @@ function shop:update()
 				b.disabled = self.page == #self.pages
 			end
 		end
+
 		b:update(0)
 	end
 
