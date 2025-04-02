@@ -14,7 +14,7 @@ function ingame:init()
 		nxp = 10,
 		level = 1,
 
-		gap = 2,
+		gap = 1.3,
 		inc = 0.15,
 
 		cam = {
@@ -35,7 +35,7 @@ function ingame:init()
 		inv = {},
 	}
 
-	add(self.data.inv, item.new(plants[1].name, 10, 1))
+	add(self.data.inv, item.new(plants[1].name, 1, 1))
 
 	-- loop through the entire map.
 	for x = 0, 128 do
@@ -125,15 +125,17 @@ function ingame:update()
 		cam.x -= cam.speed
 	end
 
-	if btnp(⬆️) then
-		data.inv_id = (data.inv_id and data.inv_id - 1 or #inv)
-		if data.inv_id < 1 then
-				data.inv_id = #data.inv
-		end
-		elseif btnp(⬇️) then
-			data.inv_id = (data.inv_id and data.inv_id + 1 or 1)
-		if data.inv_id > #data.inv then
-				data.inv_id = 1
+	if #data.inv > 0 then
+		if btnp(⬆️) then
+			data.inv_id = (data.inv_id and data.inv_id - 1 or #data.inv)
+			if data.inv_id < 1 then
+					data.inv_id = #data.inv
+			end
+			elseif btnp(⬇️) then
+				data.inv_id = (data.inv_id and data.inv_id + 1 or 1)
+			if data.inv_id > #data.inv then
+					data.inv_id = 1
+			end
 		end
 	end
 
@@ -214,7 +216,6 @@ function ingame:draw()
 	spr(242, 20 - self.data.cam.x * 8, 90)
 	?"shop", 16 - self.data.cam.x * 9, 80, 7
 
-	-- rect((15 - self.data.cam.x * 9), 90, (33 - self.data.cam.x * 9), 100, 6)
 	shop:draw()
 	inventory:draw()
 end
