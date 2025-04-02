@@ -23,7 +23,7 @@ function ingame:init()
 
 			bounds = {
 				left = 0,
-				right = 13
+				right = 13,
 			}
 		},
 
@@ -182,6 +182,16 @@ end
 
 function ingame:draw()
 	cls(12)
+
+	-- mountains
+	map(0, 16, 120 - (self.data.cam.x * 0.4), 60, 18, 10)
+	map(0, 16, -1 - (self.data.cam.x * 0.4), 60, 18, 10)
+
+	-- clouds
+	map(0, 23, -160 - self.data.cam.x * 0.8, 20, 21, 10)
+	map(0, 23, -self.data.cam.x * 0.8, 20, 21, 10)
+	map(0, 23, 150 - self.data.cam.x * 0.8, 20, 21, 10)
+
 	map(self.data.cam.x, 0)
 
 	for plot in all(self.data.plots) do
