@@ -129,6 +129,17 @@ function shop:init()
 end
 
 function shop:update()
+	local shop_col = {
+		x = (15 - ingame.data.cam.x * 9), y = 90,
+		w = (33 - ingame.data.cam.x * 9), h = 100
+	}
+
+	if pr(shop_col, mouse.x, mouse.y) then
+		if mouse.held then
+			self:open()
+		end
+	end
+
 	if not self.is_active then
 		return
 	end

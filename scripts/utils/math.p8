@@ -9,3 +9,12 @@ function m(t)return(128-(#t*4))/2end
 
 function pr(rect,px,py)return px>=rect.x and px<rect.x+rect.w and py>=rect.y and py<rect.y+rect.h end
 function pad(num, length) local st=tostr(num)while #st<length do st="0"..st end return st end
+
+-- from miss mouse in pico8 discord
+function constructor(fields)
+	fields = split(fields)
+	return function(vals)
+		if (type(vals) == "string") vals = split(vals)
+		local res = {} for i,k in inext,fields do res[k] = vals[i] end return res
+	end
+end

@@ -90,6 +90,10 @@ function inventory:init()
 end
 
 function inventory:update()
+	if btnp(❎) then
+		self:open()
+	end
+
 	if not self.is_active then
 		return
 	end

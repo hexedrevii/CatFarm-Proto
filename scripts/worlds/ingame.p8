@@ -14,6 +14,10 @@ function ingame:init()
 		nxp = 10,
 		level = 1,
 
+		farm_level = 1,
+		sign_active = false,
+		sign_buttons = {},
+
 		gap = 1.3,
 		inc = 0.15,
 
@@ -35,7 +39,7 @@ function ingame:init()
 		inv = {},
 	}
 
-	add(self.data.inv, item.new(plants[1].name, 1, 1))
+	add(self.data.inv, item.new(plants[1].name, 10, 1))
 
 	-- loop through the entire map.
 	for x = 0, 128 do
@@ -49,6 +53,39 @@ function ingame:init()
 
 	shop:init()
 	inventory:init()
+
+	local colours = { normal = 7, hover = 10 }
+	add(self.data.sign_buttons, button.new(
+		"okay", colours,
+		4, 9.9, 0, 0,
+		function()
+			local sign = signs[self.data.farm_level]
+
+			if self.data.level < sign.lvl then
+				return
+			end
+
+			if self.data.coins < sign.cost then
+				return
+			end
+
+			self.data.coins -= sign.cost
+			self.data.cam.bounds.right = sign.reward
+
+			self.data.farm_level += 1
+			self.data.sign_active = false
+
+			mset(sign.x, sign.y, 0)
+		end
+	))
+
+	add(self.data.sign_buttons, button.new(
+		"nevermind", colours,
+		7.8, 9.9, 0, 0,
+		function()
+			self.data.sign_active = false
+		end
+	))
 end
 
 function ingame:draw_shop()
@@ -82,29 +119,29 @@ end
 function ingame:update()
 	local data = self.data
 
-	local shop_col = {
-		x = (15 - self.data.cam.x * 9), y = 90,
-		w = (33 - self.data.cam.x * 9), h = 100
-	}
-
-	if pr(shop_col, mouse.x, mouse.y) then
-		if mouse.held then
-			shop:open()
+	-- sign col
+	if mget(mouse.mx + data.cam.x, mouse.my) == 17 then
+		if data.farm_level <= #signs then
+			if mouse.held then
+				data.sign_active = true
+			end
 		end
 	end
 
-	shop:update()
+	if data.sign_active then
+		for b in all(self.data.sign_buttons) do
+			b:update(0)
+		end
 
+		return
+	end
+
+	shop:update()
 	if shop.is_active then
 		return
 	end
 
-	if btnp(❎) then
-		inventory:open()
-	end
-
 	inventory:update()
-
 	if inventory.is_active then
 		return
 	end
@@ -228,4 +265,19 @@ function ingame:draw()
 
 	shop:draw()
 	inventory:draw()
+
+	-- sign
+	if self.data.sign_active then
+		rectfill(30, 45, 98, 85, 1)
+		rect(30, 45, 98, 85, 13)
+
+		?"expand the farm?", 33, 48, 7
+		?"requires:", 33, 58, 7
+		?"lvl " .. signs[self.data.farm_level].lvl .. "+", 33, 64, 7
+		?signs[self.data.farm_level].cost .. "c", 33, 70, 7
+
+		for b in all(self.data.sign_buttons) do
+			b:draw(0)
+		end
+	end
 end

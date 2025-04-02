@@ -19,7 +19,7 @@ function plot.new(x, y)
 		}
 	}
 
-	local colours = { normal = 7, hover = 10 }
+	local colours = { normal = 2, hover = 10 }
 
 	p.harvest = button.new("harvest", colours, p.x, p.y, -8, -17, function()
 		local plant = plants[p.growth.id]
