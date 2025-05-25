@@ -28,6 +28,11 @@ function ingame:init()
 			bounds = {
 				left = 0,
 				right = 13,
+			},
+
+			mousebounds = {
+				x = 125,
+				y = 3
 			}
 		},
 
@@ -93,13 +98,13 @@ function ingame:draw_shop()
   local x, y = (0 - self.data.cam.x * 3), 56
   local tile_size = 8
 
-  for i=0,1 do
-    for j=0,1 do
-      local tile = 224 + i * 16 + j
-      local sx = (tile % 16) * tile_size
-      local sy = (tile \ 16) * tile_size
+	for i=0,1 do
+		for j=0,1 do
+			local tile = 224 + i * 16 + j
+			local sx = (tile % 16) * tile_size
+			local sy = (tile \ 16) * tile_size
 
-      sspr(
+			sspr(
 				sx, sy,
 				tile_size, tile_size,
 				(x + j * tile_size) * scale, y + i * tile_size * scale,
@@ -155,6 +160,21 @@ function ingame:update()
 
 		cam.x += cam.speed
 	elseif btn(⬅️) then
+		if (cam.x <= cam.bounds.left) then
+			return
+		end
+
+		cam.x -= cam.speed
+	end
+
+	-- camera moves when mouse is at edge
+	if mouse.x >= cam.mousebounds.x then
+		if (cam.x >= cam.bounds.right) then
+			return
+		end
+
+		cam.x += cam.speed
+	elseif mouse.x <= cam.mousebounds.y then
 		if (cam.x <= cam.bounds.left) then
 			return
 		end
