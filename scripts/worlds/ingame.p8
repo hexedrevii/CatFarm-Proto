@@ -2,6 +2,11 @@ ingame = {
 	data = nil
 }
 
+function ingame:__debugset_data(c, l)
+	self.data.coins = c
+	self.data.level = l
+end
+
 -- We declare all data here
 -- Since it means it resets every time.
 function ingame:init()
@@ -91,27 +96,8 @@ function ingame:init()
 			self.data.sign_active = false
 		end
 	))
-end
 
-function ingame:draw_shop()
-	local scale = self.data.scale
-  local x, y = (0 - self.data.cam.x * 3), 56
-  local tile_size = 8
-
-	for i=0,1 do
-		for j=0,1 do
-			local tile = 224 + i * 16 + j
-			local sx = (tile % 16) * tile_size
-			local sy = (tile \ 16) * tile_size
-
-			sspr(
-				sx, sy,
-				tile_size, tile_size,
-				(x + j * tile_size) * scale, y + i * tile_size * scale,
-				tile_size * scale, tile_size * scale
-			)
-    end
-  end
+	self:__debugset_data(10000, 100)
 end
 
 function ingame:handle_xp()
@@ -279,9 +265,12 @@ function ingame:draw()
 
 	?"cycle ⬆️/⬇️, ❎ open", 1, 27, 6
 
-	self:draw_shop()
+	ssspr(0 - self.data.cam.x * 3, 56, 224, 16, self.data.scale)
 	spr(242, 20 - self.data.cam.x * 8, 90)
 	?"shop", 16 - self.data.cam.x * 9, 80, 7
+
+	-- Lighthouse test
+	ssspr(200 - self.data.cam.x * self.data.scale, 56, 232, 16, self.data.scale)
 
 	shop:draw()
 	inventory:draw()

@@ -18,3 +18,23 @@ function constructor(fields)
 		local res = {} for i,k in inext,fields do res[k] = vals[i] end return res
 	end
 end
+
+
+function ssspr(x, y, tx, ty, scale)
+	local tile_size = 8
+
+	for i=0,1 do
+		for j=0,1 do
+			local tile = tx + i * ty + j
+			local sx = (tile % 16) * tile_size
+			local sy = (tile \ 16) * tile_size
+
+			sspr(
+				sx, sy,
+				tile_size, tile_size,
+				(x + j * tile_size) * scale, y + i * tile_size * scale,
+				tile_size * scale, tile_size * scale
+			)
+		end
+	end
+end

@@ -27,7 +27,10 @@ function button:update(cam)
 		return
 	end
 
-	if pr({x = (self.x - cam) * 8 + self.ox, y = self.y * 8 + self.oy, w = self.w, h = self.h}, mouse.x, mouse.y) then
+	if pr(
+		{x = (self.x - cam) * 8 + self.ox, y = self.y * 8 + self.oy, w = self.w, h = self.h},
+		mouse.x, mouse.y
+	) then
 		self.colour = self.colours.hover
 
 		if mouse.held and not self.pressed then
