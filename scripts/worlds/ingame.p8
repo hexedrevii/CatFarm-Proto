@@ -269,8 +269,11 @@ function ingame:draw()
 	spr(242, 20 - self.data.cam.x * 8, 90)
 	?"shop", 16 - self.data.cam.x * 9, 80, 7
 
-	-- Lighthouse test
+	-- Lighthouse
 	ssspr(200 - self.data.cam.x * self.data.scale, 56, 232, 16, self.data.scale)
+
+	-- Upgrades shop
+	ssspr(145 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
 
 	shop:draw()
 	inventory:draw()
