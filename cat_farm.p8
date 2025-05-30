@@ -7,6 +7,7 @@ __lua__
 #include scripts/utils/plants.p8
 #include scripts/utils/mouse.p8
 
+#include scripts/entities/upgrades.p8
 #include scripts/entities/shop.p8
 #include scripts/entities/inventory.p8
 #include scripts/entities/item.p8

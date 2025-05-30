@@ -32,7 +32,7 @@ function ingame:init()
 
 			bounds = {
 				left = 0,
-				right = 13,
+				right = 100,
 			},
 
 			mousebounds = {
@@ -61,6 +61,7 @@ function ingame:init()
 		end
 	end
 
+	upg:init()
 	shop:init()
 	inventory:init()
 
@@ -124,6 +125,11 @@ function ingame:update()
 			b:update(0)
 		end
 
+		return
+	end
+
+	upg:update()
+	if upg.is_active then
 		return
 	end
 
@@ -274,6 +280,7 @@ function ingame:draw()
 
 	-- Upgrades shop
 	ssspr(145 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
+	upg:draw()
 
 	shop:draw()
 	inventory:draw()
