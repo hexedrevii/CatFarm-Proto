@@ -23,6 +23,8 @@ function ingame:init()
 		sign_active = false,
 		sign_buttons = {},
 
+		growth_mlt = 1.0,
+
 		gap = 1.3,
 		inc = 0.15,
 
@@ -32,7 +34,7 @@ function ingame:init()
 
 			bounds = {
 				left = 0,
-				right = 100,
+				right = 13,
 			},
 
 			mousebounds = {
@@ -98,7 +100,7 @@ function ingame:init()
 		end
 	))
 
-	self:__debugset_data(10000, 100)
+	-- self:__debugset_data(10000, 100)
 end
 
 function ingame:handle_xp()
@@ -275,11 +277,11 @@ function ingame:draw()
 	spr(242, 20 - self.data.cam.x * 8, 90)
 	?"shop", 16 - self.data.cam.x * 9, 80, 7
 
-	-- Lighthouse
+	-- lighthouse
 	ssspr(200 - self.data.cam.x * self.data.scale, 56, 232, 16, self.data.scale)
 
-	-- Upgrades shop
-	ssspr(145 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
+	-- upgrades shop
+	ssspr(105 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
 	upg:draw()
 
 	shop:draw()

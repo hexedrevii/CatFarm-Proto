@@ -55,7 +55,7 @@ function plot.new(x, y)
 
 		p.growth.id = item.id
 		p.growth.time = 0
-		p.growth.mtime = plant.time
+		p.growth.mtime = plant.time * ingame.data.growth_mlt
 		p.growth.sp = plant.mip
 
 		p.growth.mv = true
