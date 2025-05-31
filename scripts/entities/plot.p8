@@ -61,6 +61,8 @@ function plot.new(x, y)
 		p.growth.mv = true
 
 		p.state = "growing"
+
+		p.active = false
 	end))
 
 	add(p.buttons, button.new("cancel", colours, p.x, p.y, 10, -5, function() p.active = false end))
@@ -99,6 +101,11 @@ function plot:update(cam)
 end
 
 function plot:draw(cam)
+	-- Show that plots are updated :3
+	if ingame.data.growth_mlt == 0.85 then
+		spr(19, ((self.x - cam) * 8) - 2, 96)
+	end
+
 	if self.active then
 		for b in all(self.buttons) do
 			b:draw(cam);
