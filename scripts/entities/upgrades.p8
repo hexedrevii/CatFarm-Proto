@@ -37,6 +37,13 @@ function upg:create_upgrade(upgrade, colours, oy)
 end
 
 function upg:open()
+	-- if any plot is active bail
+	for plot in all(ingame.data.plots) do
+		if plot.active then
+			return
+		end
+	end
+
 	for page in all(self.pages) do
 		for b in all(page) do
 			if b.bought != nil then

@@ -34,7 +34,7 @@ function ingame:init()
 
 			bounds = {
 				left = 0,
-				right = 13,
+				right = 100,
 			},
 
 			mousebounds = {
@@ -118,6 +118,14 @@ function ingame:update()
 		if data.farm_level <= #signs then
 			if mouse.held then
 				data.sign_active = true
+
+				-- disable if not enough
+				if signs[self.data.farm_level].cost > self.data.coins or
+				signs[self.data.farm_level].lvl > self.data.level then
+					self.data.sign_buttons[1].disabled = true
+				else
+					self.data.sign_buttons[1].disabled = false
+				end
 			end
 		end
 	end
@@ -219,6 +227,10 @@ function ingame:update()
 				end
 
 				if proceed then
+					for b in all (plot.buttons) do
+						b.colour = 2
+					end
+
 					plot.active = true
 					self.data.pressed = true;
 				end
@@ -244,6 +256,9 @@ function ingame:draw()
 	map(0, 23, 150 - self.data.cam.x * 0.8, 20, 21, 10)
 
 	map(self.data.cam.x, 0)
+
+	-- upgrades sprite (behind  plots)
+	ssspr(105 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
 
 	for plot in all(self.data.plots) do
 		plot:draw(self.data.cam.x)
@@ -281,7 +296,6 @@ function ingame:draw()
 	ssspr(200 - self.data.cam.x * self.data.scale, 56, 232, 16, self.data.scale)
 
 	-- upgrades shop
-	ssspr(105 - self.data.cam.x * self.data.scale, 56, 230, 16, self.data.scale)
 	upg:draw()
 
 	shop:draw()

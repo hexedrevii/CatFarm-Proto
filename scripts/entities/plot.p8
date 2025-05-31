@@ -33,6 +33,7 @@ function plot.new(x, y)
 		end
 
 		p.state = "empty"
+		p.active = false
 	end)
 
 	add(p.buttons, button.new("plant", colours, p.x, p.y, -20, -5, function()
